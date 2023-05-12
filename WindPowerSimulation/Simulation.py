@@ -29,6 +29,6 @@ def GetPower(wind_speed:float,Turbine_angle:float):
     if(direct_wind_speed <WS_CutIn  or direct_wind_speed >WS_CutOut):
         return 0
     elif(WS_Rated<direct_wind_speed < WS_CutOut):
-        return WS_Rated
+        return WS_Rated - WS_CutIn
     else:
-        return direct_wind_speed
+        return direct_wind_speed- WS_Rated
