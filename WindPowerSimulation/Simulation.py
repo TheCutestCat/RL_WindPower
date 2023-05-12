@@ -41,7 +41,15 @@ def GenerateMap(length, width, initial_wind_speed = 3):
         raise ValueError('initial_wind_speed should larger than 0')
     grid = np.ones([length,width])*initial_wind_speed
     return grid
-
+def GetInfluence(map,initial_pos,width,angle):
+    # TODO
+    # 这里可以尝试创建很多个的节点去进行要给测验
+    # 在对应的位置之后，所有可以有对应关系的节点
+    # 还需要给出来在influence map之外的节点
+    # 然后根据对应的距离关系给出一个大概的结果
+    # 其实我们可以直接将这个结果改编为 update..
+    return  #一个对应的比较小的区间位置。
+    pass
 class Map():
     def __init__(self, length = 500,width = 100,initial_wind_speed = 3):
         self.length = length
@@ -58,16 +66,22 @@ class Map():
             position_x,position_y = int(self.length * index_x), int(self.width * index_y)
             position.append([position_x,position_y])
         return position
-    def get_influence_area(self,angle):
-        # use the real power gradient
-        #使用 self.position_turbine对后续的结构进行相关的分析
-        # try to get the influence_area after the turbine and the influence_ratio
-        # return influence_area_index,influence_ratio #[N,1] [N,] #这里我们需要给出
-        pass
+
+    # def get_influence(self,position_index,angle):
+    #     # position_index just a real single number.
+    #     pos_x,pos_y = self.position_turbine[position_index]
+    #     # 同时假设在经过风力发电机之后，其影响的范围是一条直线(一条直线影响后面的结果)
+    #     influence_area = [] # just the place after that
+    #     # 对应的线性的实现逻辑
+    #     #just one angle and one map
+    #     return
+    #     pass
     def update(self,angle):
         # angle 4个风机所选择的对应角度~当前我们的要求是 -90 ~ 90度之间
         # 用来修改我们当前的map，更新风速场
+        # 还是直接去使用update吧。
+        # 直接写出来简单的解法。
         pass
     def get_power(self,angle):
-        return power # return sum of all the power
+        # return power # return sum of all the power
         pass
