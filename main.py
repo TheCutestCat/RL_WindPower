@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from floris.tools import FlorisInterface
+from floris.tools.visualization import visualize_cut_plane
 
 fi = FlorisInterface("inputs/gch.yaml")
 
@@ -23,18 +24,20 @@ fi.calculate_wake(yaw_angles=yaw_angles)
 
 powers = fi.get_turbine_powers() / 1000.0  # calculated in Watts, so convert to kW
 
-print("Dimensions of `powers`")
-print( np.shape(powers) )
-
 N_TURBINES = fi.floris.farm.n_turbines
 
-print()
-print("Turbine powers for 8 m/s")
-for i in range(2):
-    print(f"Wind direction {i}")
-    for j in range(N_TURBINES):
-        print(f"  Turbine {j} - {powers[i, 0, j]:7,.2f} kW")
-    print()
+fig, axarr = plt.subplots(2, 2, figsize=(15,8))
+wind_directions=[270.0, 280.0]
+horizontal_plane = fi.calculate_horizontal_plane(height=90.0)
+visualize_cut_plane(horizontal_plane, ax=axarr[0,0], title="270 - Aligned")
 
-print("Turbine powers for all turbines at all wind conditions")
-print(powers)
+# horizontal_plane = fi.calculate_horizontal_plane(wd=[wind_directions[0]], yaw_angles=yaw_angles[0:1,0:1] , height=90.0)
+# visualize_cut_plane(horizontal_plane, ax=axarr[0,1], title="270 - Yawed")
+#
+# horizontal_plane = fi.calculate_horizontal_plane(wd=[wind_directions[1]], height=90.0)
+# visualize_cut_plane(horizontal_plane, ax=axarr[1,0], title="280 - Aligned")
+#
+# horizontal_plane = fi.calculate_horizontal_plane(wd=[wind_directions[1]], yaw_angles=yaw_angles[1:2,0:1] , height=90.0)
+# visualize_cut_plane(horizontal_plane, ax=axarr[1,1], title="280 - Yawed")
+
+plt.show()
