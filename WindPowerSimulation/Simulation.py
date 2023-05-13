@@ -1,3 +1,4 @@
+# try to use the floris, this funtion is no more useful
 # wind, angle -> power
 # wind, angle -> wind after the wind plant()
 # a map 2D of the wind
