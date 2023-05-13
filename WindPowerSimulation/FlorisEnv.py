@@ -65,14 +65,16 @@ class env():
         visualize_cut_plane(horizontal_plane, ax=axarr[1], title="270 - Yawed")
 
         plt.show()
-    def go(self):
-        pass
+    def RUN(self,angle,show = False):
+        self.SetYawAngle(Angle=angle)
+        result = self.CalculateWithYaw()
+        if(show):
+            self.show()
+        return result
 
 
 
 if __name__ =='__main__':
     myenv = env()
-    myenv.SetYawAngle(Angle = [30,0.0,0.0,0.0,0.0,0.0])
-    A = myenv.CalculateWithYaw()
+    A = myenv.RUN(angle = [30,0,0,0,0,0])
     print(A)
-    myenv.show()
