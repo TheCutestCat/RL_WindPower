@@ -7,7 +7,7 @@ import gym
 class FlorisEnv(gym.Env):
     def __init__(self):
         # 1. Load an input file
-        self.fi = FlorisInterface("../inputs/gch.yaml")
+        self.fi = FlorisInterface("inputs/gch.yaml")
 
         # 2. Modify the inputs with a more complex wind turbine layout
         D = 126.0  # Design the layout based on turbine diameter
@@ -54,16 +54,16 @@ class FlorisEnv(gym.Env):
         # 8. Compare farm power with and without wake steering
         difference = 100 * (self.farm_power_yaw - self.farm_power_baseline) / self.farm_power_baseline
         # 目前还是先设置没有并行的，最终只返回一个简单地结果哦
-        return difference[0, 0],turbine_powers
+        return difference[0, 0]
     def show(self):
 
         fig, axarr = plt.subplots(2, 1, figsize=(15,8))
 
         horizontal_plane = self.fi.calculate_horizontal_plane(wd=[self.wind_directions[0]], height=90.0)
-        visualize_cut_plane(horizontal_plane, ax=axarr[0], title="270 - Aligned")
+        visualize_cut_plane(horizontal_plane, ax=axarr[0], title="Aligned")
 
         horizontal_plane = self.fi.calculate_horizontal_plane(wd=[self.wind_directions[0]], yaw_angles=self.yaw_angles[0:1,0:1] , height=90.0)
-        visualize_cut_plane(horizontal_plane, ax=axarr[1], title="270 - Yawed")
+        visualize_cut_plane(horizontal_plane, ax=axarr[1], title="Yawed")
 
         plt.show()
     def RUN(self,angle,show = False):

@@ -1,6 +1,30 @@
-from stable_baselines3 import DQN
-from stable_baselines3.common.evaluation import evaluate_policy
 from WindPowerSimulation.FlorisEnv import FlorisEnv
-env = FlorisEnv()
-#最后发现还是自己去写要更加简单容易一些。。
-# 可以尝试去使用一下 Rllibr(这个内容的效果好像还是可以的，原来软件有点卡的主要原因还是因为C盘有点太满了。。)
+# 测试了很多的算法之后，发现还不如直接选择去穷举法。。至少对于小规模的风电调度已经是完全够用了。。
+import numpy as np
+
+from sb3_contrib import RecurrentPPO
+from stable_baselines3.common.evaluation import evaluate_policy
+
+model = RecurrentPPO("MlpLstmPolicy", "CartPole-v1", verbose=1)
+model.learn(5000)
+
+vec_env = model.get_env()
+mean_reward, std_reward = evaluate_policy(model, vec_env, n_eval_episodes=20, warn=False)
+print(mean_reward)
+
+model.save("ppo_recurrent")
+del model # remove to demonstrate saving and loading
+
+model = RecurrentPPO.load("ppo_recurrent")
+
+obs = vec_env.reset()
+# cell and hidden state of the LSTM
+lstm_states = None
+num_envs = 1
+# Episode start signals are used to reset the lstm states
+episode_starts = np.ones((num_envs,), dtype=bool)
+while True:
+    action, lstm_states = model.predict(obs, state=lstm_states, episode_start=episode_starts, deterministic=True)
+    obs, rewards, dones, info = vec_env.step(action)
+    episode_starts = dones
+    vec_env.render("human")

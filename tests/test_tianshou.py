@@ -1,5 +1,5 @@
 import unittest
-from WindPowerSimulation.Simulation import GetPower
+from WindPowerSimulation.GridSimulation_notuseful import GetPower
 
 class Test_GetPower(unittest.TestCase):
     def test_postive(self):
