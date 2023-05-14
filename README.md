@@ -1,2 +1,2 @@
 # RL_WindPower
-windpower wake control based on floris
+wind turbine wake control based on floris
