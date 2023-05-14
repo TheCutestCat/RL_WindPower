@@ -1,5 +1,5 @@
 # RL_WindPower
-wind turbine wake control based on floris[https://github.com/NREL/floris]
+wind turbine wake control based on (floris)[https://github.com/NREL/floris]
 after install the floris, just run main.py and we can get :
 the best angle is (**30, 25, 20, 20, 0, 0**) with result of **18.11** time cost 16.78
 and a picture which is the result after optimization
