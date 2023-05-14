@@ -3,7 +3,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 from floris.tools.visualization import visualize_cut_plane
 
-class env():
+class FlorisEnv():
     def __init__(self):
         # 1. Load an input file
         self.fi = FlorisInterface("../inputs/gch.yaml")
@@ -40,7 +40,7 @@ class env():
             raise ValueError('len of Angle should be 6')
         self.yaw_angles = np.zeros( (1, 1, 6) )  # Construct the yaw array with dimensions for two wind directions, one wind speed, and four turbines
         for i in range(len(Angle)):
-            if(not isinstance(Angle[i],(float,int)) or Angle[i]>70 or Angle[i]<-70):
+            if(not isinstance(Angle[i],(float,int,np.float32)) or Angle[i]>70 or Angle[i]<-70):
                 raise ValueError('Angle should be float and in the section of [-70,70]')
             self.yaw_angles[0, :, i] = Angle[i]
     def CalculateWithYaw(self):
@@ -53,7 +53,7 @@ class env():
         # 8. Compare farm power with and without wake steering
         difference = 100 * (self.farm_power_yaw - self.farm_power_baseline) / self.farm_power_baseline
         # 目前还是先设置没有并行的，最终只返回一个简单地结果哦
-        return difference[0, 0]
+        return difference[0, 0],turbine_powers
     def show(self):
 
         fig, axarr = plt.subplots(2, 1, figsize=(15,8))
@@ -75,6 +75,6 @@ class env():
 
 
 if __name__ =='__main__':
-    myenv = env()
-    A = myenv.RUN(angle = [30,0,0,0,0,0])
+    myenv = FlorisEnv()
+    A = myenv.RUN(angle = [0.5,0,0,0,0,0])
     print(A)
