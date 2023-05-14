@@ -29,8 +29,10 @@ class WindTurbineEnv(gym.Env):
         self.reward_range = (0, np.inf)
 
     def reset(self):
+        obs = self.env.reset()
         # 返回初始状态，所有发电机yaw angle随机分布
-        return np.zeros((12,),dtype=np.float32)
+        obs = np.zeros((12,),dtype=np.float32)
+        return obs
 
     def step(self, action):
         difference, turbine_powers = self.env.RUN(angle=action)

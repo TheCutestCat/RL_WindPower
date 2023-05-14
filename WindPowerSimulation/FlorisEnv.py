@@ -2,8 +2,9 @@ from floris.tools import FlorisInterface
 import numpy as np
 from matplotlib import pyplot as plt
 from floris.tools.visualization import visualize_cut_plane
+import gym
 
-class FlorisEnv():
+class FlorisEnv(gym.Env):
     def __init__(self):
         # 1. Load an input file
         self.fi = FlorisInterface("../inputs/gch.yaml")
